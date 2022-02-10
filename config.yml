@@ -1,0 +1,12 @@
+server:
+    allowed_hosts: ["127.0.0.1", "103.201.127.144", "*"]
+
+smtp:
+    username: viperadnan@email.com
+    password: TheStr@ngPassword
+    host: smtp.mail.yahoo.com
+    port: 587
+
+options:
+    whitelist: ["*@gmail.com"]
+    blacklist: ["*-*@gmail.com"]
