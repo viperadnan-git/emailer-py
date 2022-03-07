@@ -52,7 +52,7 @@ class EmailServer:
     def send(self, to: str, subject: str, body: str, html_body=None, sender: str = None):
         email_body = self.create_email_body(body=body, html_body=html_body)
         if not sender:
-            sender = self.__config.username
+            sender = config.options.get('default_sender', self.__config.username)
         email_body['From'] = sender
         email_body['To'] = to
         if subject:

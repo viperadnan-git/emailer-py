@@ -8,5 +8,6 @@ smtp:
     port: 587
 
 options:
+    default_sender: viperadnan@email.com
     whitelist: ["*@gmail.com"]
     blacklist: ["*-*@gmail.com"]
