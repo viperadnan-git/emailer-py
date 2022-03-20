@@ -6,3 +6,4 @@ class EmailRequestModel(BaseModel):
     subject: str = None
     html: str = None
     sender: str = None
+    sender_name: str = None

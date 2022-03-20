@@ -9,5 +9,6 @@ smtp:
 
 options:
     default_sender: viperadnan@email.com
+    default_sender_name: "Adnan Ahmad"
     whitelist: ["*@gmail.com"]
     blacklist: ["*-*@gmail.com"]

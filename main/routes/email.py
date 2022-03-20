@@ -20,7 +20,8 @@ async def emailer_handler(body:EmailRequestModel, response:Response):
                     subject=body.subject,
                     body=body.body,
                     html_body=body.html,
-                    sender=body.sender
+                    sender=body.sender,
+                    sender_name=body.sender_name
                 )
             except Exception as err:
                 response.status_code = status.HTTP_400_BAD_REQUEST

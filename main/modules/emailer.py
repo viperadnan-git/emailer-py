@@ -4,7 +4,7 @@ from main import config
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from types import SimpleNamespace
-
+from email.utils import formataddr
 
 log = logging.getLogger(__name__)
 
@@ -29,7 +29,6 @@ class EmailServer:
         log.info('SMTP logging successful')
         return self.__server
 
-
     def create_email_body(self, body: str, html_body):
         log.info('Creating E-mail Body...')
         email_body = MIMEMultipart('alternative')
@@ -40,7 +39,7 @@ class EmailServer:
             email_body.attach(html_part)
         return email_body
 
-    def send_email(self, sender:str, to:str, body:str):
+    def send_email(self, sender: str, to: str, body: str):
         log.info('Sending E-mail to {to}'.format(to=to))
         try:
             self.__server.sendmail(from_addr=sender, to_addrs=to, msg=body)
@@ -48,12 +47,22 @@ class EmailServer:
             self.connect()
             self.send_email(sender=sender, to=to, body=body)
 
-
-    def send(self, to: str, subject: str, body: str, html_body=None, sender: str = None):
+    def send(self, to: str, subject: str, body: str, html_body=None, sender: str = None, sender_name: str = None):
         email_body = self.create_email_body(body=body, html_body=html_body)
         if not sender:
-            sender = config.options.get('default_sender', self.__config.username)
-        email_body['From'] = sender
+            email_body['From'] = formataddr(
+                (
+                    (sender_name or config.options.get('default_sender_name', None)),
+                    config.options.get('default_sender', self.__config.username)
+                )
+            )
+        else:
+            email_body['From'] = formataddr(
+                (
+                    (sender_name or config.options.get('default_sender_name', None)),
+                    sender
+                )
+            )
         email_body['To'] = to
         if subject:
             email_body['Subject'] = subject
